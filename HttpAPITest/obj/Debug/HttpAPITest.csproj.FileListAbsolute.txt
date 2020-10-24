@@ -1,0 +1,14 @@
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\bin\Debug\HttpAPITest.exe.config
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\bin\Debug\HttpAPITest.exe
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\bin\Debug\HttpAPITest.pdb
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\obj\Debug\HttpAPITest.csprojAssemblyReference.cache
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\obj\Debug\HttpAPITest.HttpTest.resources
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\obj\Debug\HttpAPITest.Properties.Resources.resources
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\obj\Debug\HttpAPITest.csproj.GenerateResource.cache
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\obj\Debug\HttpAPITest.csproj.CoreCompileInputs.cache
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\obj\Debug\HttpAPITest.exe
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\obj\Debug\HttpAPITest.pdb
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\bin\Debug\Newtonsoft.Json.dll
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\bin\Debug\Newtonsoft.Json.xml
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\obj\Debug\HttpAPITest.csproj.CopyComplete
+C:\Users\tyler\source\repos\HttpAPITest\HttpAPITest\bin\Debug\Json.Net.dll
