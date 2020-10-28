@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace HttpAPITest
 {
@@ -19,6 +20,10 @@ namespace HttpAPITest
         /// Store the types of http requests such as POST, PUT, etc
         /// </summary>
         public List<String> httpMethods { get; set; }
+        /// <summary>
+        /// Our client to use for the program
+        /// </summary>
+        static readonly HttpClient client = new HttpClient();
         /// <summary>
         /// Dictionary object to contain data received from GET request
         /// </summary>
@@ -40,39 +45,70 @@ namespace HttpAPITest
             httpComboBox.DataSource = httpMethods;
         }
         /// <summary>
+        /// Get requested data and change associated values of controls when data is received
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        async Task HTTPGET(string uri)
+        {
+            List<IDictionary<string, dynamic>> output = null;
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(uri); //halt method and wait on response from api
+                response.EnsureSuccessStatusCode(); //make sure we have 200 OK
+                string responseBody = await response.Content.ReadAsStringAsync(); //halt method and wait on string read
+                responseBodyTextBox.Text = responseBody; //update control
+                output = JsonConvert.DeserializeObject<List<IDictionary<string, dynamic>>>(responseBody); //Convert from json text to dictionary
+                //application specific code below
+                dict = output[0];
+                List<string> keys = dict.Keys.ToList();
+                keysListBox.DataSource = keys; //populate listbox with keys
+                requestBodyTextBox.Text = JsonConvert.SerializeObject(dict);
+            }
+            catch (HttpRequestException e)
+            {
+                responseBodyTextBox.Text = e.Message;
+            }
+        }
+
+        async Task HTTPPOST(string uri, string body)
+        {
+            try
+            {
+                //List<IDictionary<string, dynamic>> tempdict = null;
+                //tempdict = JsonConvert.DeserializeObject<List<IDictionary<string, dynamic>>>(body);
+                //var json = JsonConvert.SerializeObject(tempdict);
+                //requestBodyTextBox.Text = json.ToString();
+                var data = new StringContent(body, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(uri, data);
+                response.EnsureSuccessStatusCode(); //make sure we have 200 OK
+                responseBodyTextBox.Text = response.ToString();
+            }
+            catch (HttpRequestException e)
+            {
+                responseBodyTextBox.Text = e.Message;
+            }
+            
+        }
+
+        /// <summary>
         /// Send a HTTP request based on request type.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="url"></param>
         /// <param name="body"></param>
         /// <returns></returns>
-        private string SendRequest(string type, string url, string body = "")
+        private void SendRequest(string type, string url, string body = "")
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url); //Create a request object initialized with the URL. No request is made at this point.
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate; //Modern servers usually compress data before sending
             if (type == "GET")
             {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse()) //GET request
-                using (Stream stream = response.GetResponseStream()) //Get stream object for the response
-                using (StreamReader reader = new StreamReader(stream)) //Create a reader to read response stream
-                {
-                    return reader.ReadToEnd(); //return string of all data received
-                }
+                HTTPGET(url); //Async method will make all changes when it gets to it.
             }
-            return "No Data returned"; //return if request type has not been implemented
+            else if (type == "POST")
+            {
+                HTTPPOST(url, body);
+            }
             
-        }
-        /// <summary>
-        /// Convert Json Text to a Dictionary Object. Since Json may contain a list of objects (in our case a list of records) we will represent this as a list of dictionaries
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        private List<IDictionary<String, dynamic>> JsonTextToDictionary(string input)
-        {
-            List<IDictionary<string, dynamic>> output = JsonConvert.DeserializeObject<List<IDictionary<string, dynamic>>>((string)input);
-
-
-            return output;
         }
         /// <summary>
         /// Listener for the send button. Sends an http request using data in the input boxes. Converts Get request data to a dictionary object and binds data to listbox
@@ -81,13 +117,7 @@ namespace HttpAPITest
         /// <param name="e"></param>
         private void sendButton_Click(object sender, EventArgs e)
         {
-            responseBodyTextBox.Text = SendRequest((string)httpComboBox.SelectedItem, urlTextBox.Text); //Send get request and return the response to the text box
-            if ((string)httpComboBox.SelectedItem == "GET")
-            {
-                dict = JsonTextToDictionary(responseBodyTextBox.Text)[0]; //convert text to IDictionary
-                List<string> keys = dict.Keys.ToList();
-                keysListBox.DataSource = keys; //populate listbox with keys
-            }
+            SendRequest((string)httpComboBox.SelectedItem, urlTextBox.Text, requestBodyTextBox.Text); //Send get request and return the response to the text box
             
         }
         /// <summary>
