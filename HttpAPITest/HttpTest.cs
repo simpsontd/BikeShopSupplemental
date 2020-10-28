@@ -70,7 +70,12 @@ namespace HttpAPITest
                 responseBodyTextBox.Text = e.Message;
             }
         }
-
+        /// <summary>
+        /// send a HTTP POST request using the url and bodytext(json format)
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
         async Task HTTPPOST(string uri, string body)
         {
             try
@@ -90,6 +95,52 @@ namespace HttpAPITest
             }
             
         }
+        /// <summary>
+        /// Update fields in a record using HTTP PUT request with url and bodytext(json format with fields to be changed)
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        async Task HTTPPUT(string uri, string body)
+        {
+            try
+            {
+                //List<IDictionary<string, dynamic>> tempdict = null;
+                //tempdict = JsonConvert.DeserializeObject<List<IDictionary<string, dynamic>>>(body);
+                //var json = JsonConvert.SerializeObject(tempdict);
+                //requestBodyTextBox.Text = json.ToString();
+                var data = new StringContent(body, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PutAsync(uri, data);
+                response.EnsureSuccessStatusCode(); //make sure we have 200 OK
+                responseBodyTextBox.Text = response.ToString();
+            }
+            catch (HttpRequestException e)
+            {
+                responseBodyTextBox.Text = e.Message;
+            }
+
+        }
+        /// <summary>
+        /// Send a HTTP DELETE request to delete the record specified by the url
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        async Task HTTPDELETE(string uri)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync(uri); //halt method and wait on response from api
+                response.EnsureSuccessStatusCode(); //make sure we have 200 OK
+                string responseBody = await response.Content.ReadAsStringAsync(); //halt method and wait on string read
+                responseBodyTextBox.Text = response.ToString(); //update control
+                
+                //application specific code below
+            }
+            catch (HttpRequestException e)
+            {
+                responseBodyTextBox.Text = e.Message;
+            }
+        }
 
         /// <summary>
         /// Send a HTTP request based on request type.
@@ -108,7 +159,15 @@ namespace HttpAPITest
             {
                 HTTPPOST(url, body);
             }
-            
+            else if (type == "PUT")
+            {
+                HTTPPUT(url, body);
+            }
+            else if (type == "DELETE")
+            {
+                HTTPDELETE(url);
+            }
+
         }
         /// <summary>
         /// Listener for the send button. Sends an http request using data in the input boxes. Converts Get request data to a dictionary object and binds data to listbox
