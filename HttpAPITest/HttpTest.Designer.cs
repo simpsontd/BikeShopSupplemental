@@ -41,6 +41,7 @@
             this.valueLabel = new System.Windows.Forms.Label();
             this.responseBodyTextBox = new System.Windows.Forms.TextBox();
             this.responseBodyLabel = new System.Windows.Forms.Label();
+            this.SampleButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // urlTextBox
@@ -155,11 +156,22 @@
             this.responseBodyLabel.TabIndex = 12;
             this.responseBodyLabel.Text = "Response Body";
             // 
+            // SampleButton
+            // 
+            this.SampleButton.Location = new System.Drawing.Point(679, 379);
+            this.SampleButton.Name = "SampleButton";
+            this.SampleButton.Size = new System.Drawing.Size(117, 46);
+            this.SampleButton.TabIndex = 13;
+            this.SampleButton.Text = "POST Sample Customer";
+            this.SampleButton.UseVisualStyleBackColor = true;
+            this.SampleButton.Click += new System.EventHandler(this.SampleButton_Click);
+            // 
             // HttpTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(836, 520);
+            this.Controls.Add(this.SampleButton);
             this.Controls.Add(this.responseBodyLabel);
             this.Controls.Add(this.responseBodyTextBox);
             this.Controls.Add(this.valueLabel);
@@ -195,6 +207,7 @@
         private System.Windows.Forms.Label valueLabel;
         private System.Windows.Forms.TextBox responseBodyTextBox;
         private System.Windows.Forms.Label responseBodyLabel;
+        private System.Windows.Forms.Button SampleButton;
     }
 }
 

@@ -20,6 +20,7 @@ namespace HttpAPITest
         /// Store the types of http requests such as POST, PUT, etc
         /// </summary>
         public List<String> httpMethods { get; set; }
+        public IDictionary<string, dynamic> SampleCustomer { get; set; }
         /// <summary>
         /// Our client to use for the program
         /// </summary>
@@ -43,6 +44,17 @@ namespace HttpAPITest
         {
             httpMethods = new List<String> { "POST", "GET", "PUT", "DELETE" };
             httpComboBox.DataSource = httpMethods;
+            SampleCustomer = new Dictionary<string, dynamic>();
+            SampleCustomer.Add("CustomerID", 2);
+            SampleCustomer.Add("email", "waldo@gmail.com");
+            SampleCustomer.Add("firstname", "Waldo");
+            SampleCustomer.Add("lastname", "Wheris");
+            SampleCustomer.Add("address", "101 somewhere, lost");
+            SampleCustomer.Add("zip", "37601");
+            SampleCustomer.Add("state", "TN");
+            SampleCustomer.Add("Paymentmethod", "isbroke");
+            SampleCustomer.Add("username", "DefaultUser2");
+            SampleCustomer.Add("passwordhash", "hahalol");
         }
         /// <summary>
         /// Get requested data and change associated values of controls when data is received
@@ -87,7 +99,8 @@ namespace HttpAPITest
                 var data = new StringContent(body, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync(uri, data);
                 response.EnsureSuccessStatusCode(); //make sure we have 200 OK
-                responseBodyTextBox.Text = response.ToString();
+                string responseBody = await response.Content.ReadAsStringAsync(); //halt method and wait on string read
+                responseBodyTextBox.Text = responseBody; //return new id if created
             }
             catch (HttpRequestException e)
             {
@@ -195,6 +208,11 @@ namespace HttpAPITest
                 valueTextBox.Text = "{NULL}";
             }
             
+        }
+
+        private void SampleButton_Click(object sender, EventArgs e)
+        {
+            SendRequest("POST", "https://segfault.asuscomm.com:9300/api/Metrics/Customer", JsonConvert.SerializeObject(SampleCustomer, Formatting.Indented));
         }
     }
 }
