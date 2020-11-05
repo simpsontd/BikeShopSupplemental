@@ -1,0 +1,14 @@
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\bin\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.exe
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\bin\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.deps.json
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\bin\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.runtimeconfig.json
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\bin\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.runtimeconfig.dev.json
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\bin\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.dll
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\bin\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.pdb
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\bin\Release\netcoreapp3.1\win-x64\Newtonsoft.Json.dll
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\obj\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.AssemblyInfoInputs.cache
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\obj\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.AssemblyInfo.cs
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\obj\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.csproj.CoreCompileInputs.cache
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\obj\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.csproj.CopyComplete
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\obj\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.dll
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\obj\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.pdb
+C:\Users\tyler\source\repos\MetricsSampleDataGenerator\MetricsSampleDataGenerator\obj\Release\netcoreapp3.1\win-x64\MetricsSampleDataGenerator.genruntimeconfig.cache

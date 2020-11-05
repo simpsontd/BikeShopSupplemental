@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "DnEt4IVFj/PnfQBDrLQGtnqGODa1Nmq+pNWHbxv8jX+U4cFd/ieJPVvRQ/GNxyXw9cjFGSh/h1/hQgVzq9FOWA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\tyler\\source\\repos\\MetricsSampleDataGenerator\\MetricsSampleDataGenerator\\MetricsSampleDataGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tyler\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\tyler\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\3.1.9\\microsoft.netcore.app.runtime.win-x86.3.1.9.nupkg.sha512",
+    "C:\\Users\\tyler\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x86\\3.1.9\\microsoft.windowsdesktop.app.runtime.win-x86.3.1.9.nupkg.sha512",
+    "C:\\Users\\tyler\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\3.1.9\\microsoft.aspnetcore.app.runtime.win-x86.3.1.9.nupkg.sha512"
+  ],
+  "logs": []
+}

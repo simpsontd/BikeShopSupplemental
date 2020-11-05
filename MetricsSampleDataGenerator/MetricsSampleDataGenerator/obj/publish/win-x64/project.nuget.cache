@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "54ij6aY1ZeK7JEEqlL20aaPeIy04a3UYFTAfKSvE8D4bUHy3S7PrhEod4kcJhtWz/05qJ0MSGRm2OCvyCwhitA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\tyler\\source\\repos\\MetricsSampleDataGenerator\\MetricsSampleDataGenerator\\MetricsSampleDataGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tyler\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
