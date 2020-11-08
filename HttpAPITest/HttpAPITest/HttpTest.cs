@@ -11,6 +11,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Security.Cryptography;
 
 namespace HttpAPITest
 {
@@ -20,6 +21,7 @@ namespace HttpAPITest
         /// Store the types of http requests such as POST, PUT, etc
         /// </summary>
         public List<String> httpMethods { get; set; }
+        public string Token { get; set; }
         public IDictionary<string, dynamic> SampleCustomer { get; set; }
         /// <summary>
         /// Our client to use for the program
@@ -55,6 +57,7 @@ namespace HttpAPITest
             SampleCustomer.Add("Paymentmethod", "isbroke");
             SampleCustomer.Add("username", "DefaultUser2");
             SampleCustomer.Add("passwordhash", "hahalol");
+            Token = "";
         }
         /// <summary>
         /// Get requested data and change associated values of controls when data is received
@@ -101,6 +104,10 @@ namespace HttpAPITest
                 response.EnsureSuccessStatusCode(); //make sure we have 200 OK
                 string responseBody = await response.Content.ReadAsStringAsync(); //halt method and wait on string read
                 responseBodyTextBox.Text = responseBody; //return new id if created
+                if (responseBody.Contains(':'))
+                {
+                    dict = JsonConvert.DeserializeObject<List<IDictionary<string, dynamic>>>(responseBody)[0];
+                }
             }
             catch (HttpRequestException e)
             {
@@ -155,6 +162,30 @@ namespace HttpAPITest
             }
         }
 
+        async Task LOGIN(string uri, string body)
+        {
+            try
+            {
+                //List<IDictionary<string, dynamic>> tempdict = null;
+                //tempdict = JsonConvert.DeserializeObject<List<IDictionary<string, dynamic>>>(body);
+                //var json = JsonConvert.SerializeObject(tempdict);
+                //requestBodyTextBox.Text = json.ToString();
+                var data = new StringContent(body, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(uri, data);
+                response.EnsureSuccessStatusCode(); //make sure we have 200 OK
+                string responseBody = await response.Content.ReadAsStringAsync(); //halt method and wait on string read
+                responseBodyTextBox.Text = responseBody; //return new id if created
+                dict = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(responseBody);
+                Token = dict["token"];
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Token);
+                
+            }
+            catch (HttpRequestException e)
+            {
+                responseBodyTextBox.Text = e.Message;
+            }
+        }
+
         /// <summary>
         /// Send a HTTP request based on request type.
         /// </summary>
@@ -170,7 +201,7 @@ namespace HttpAPITest
             }
             else if (type == "POST")
             {
-                HTTPPOST(url, body);
+                Task.WaitAll(HTTPPOST(url, body));
             }
             else if (type == "PUT")
             {
@@ -213,6 +244,72 @@ namespace HttpAPITest
         private void SampleButton_Click(object sender, EventArgs e)
         {
             SendRequest("POST", "https://segfault.asuscomm.com:9300/api/Metrics/Customer", JsonConvert.SerializeObject(SampleCustomer, Formatting.Indented));
+        }
+
+        private void LoginButton_Click(object sender, EventArgs e)
+        {
+            dict = new Dictionary<string, dynamic>();
+            dict.Add("Username", UserNameTextBox.Text);
+            dict.Add("PasswordHash", HashSlingingHasher(PasswordTextBox.Text));
+            if (LocalCheckBox.Checked)
+            {
+                LOGIN("https://localhost:5002/api/Login", JsonConvert.SerializeObject(dict, Formatting.Indented));
+            }
+            else
+            {
+                LOGIN("https://segfault.asuscomm.com:9300/api/Login", JsonConvert.SerializeObject(dict, Formatting.Indented));
+            }
+
+        }
+
+        public static string HashSlingingHasher(string input)
+        {
+            // Step 1, calculate MD5 hash from input
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+            // Step 2, convert byte array to hex string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hashBytes.Length; i++)
+            {
+                sb.Append(hashBytes[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+        HttpClient myClient = new HttpClient();
+
+        async Task Login()
+        {
+            string username = "AlphaAdmin";
+            string password = "AlphaAdmin";
+            string loginUrl = "https://localhost:5002/api/Login";
+            Dictionary<string, string> Credentials = new Dictionary<string, string>();
+            Credentials.Add("Username", username);
+            Credentials.Add("PasswordHash", HashSlingingHasher(password));
+            string jsonstring = JsonConvert.SerializeObject(Credentials, Formatting.Indented);
+            try
+            {
+                var data = new StringContent(jsonstring, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(loginUrl, data);
+                response.EnsureSuccessStatusCode(); //make sure we have 200 OK
+                string responseBody = await response.Content.ReadAsStringAsync(); //halt method and wait on string read
+                IDictionary<string, dynamic> result = JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(responseBody);
+                Token = result["token"];
+                myClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Token);
+
+            }
+            catch (HttpRequestException e)
+            {
+                string message = e.Message;
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Login();
         }
     }
 }
